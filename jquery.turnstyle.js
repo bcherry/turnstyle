@@ -16,7 +16,7 @@
 			if (typeof obj != "undefined") {
 				var re = /\s*([a-z0-9\.# -_:@]+\s*{)/gim;
 				var namespace = "__css" + seed++;
-				text = text.replace(re, '\n.__' + namespace + ' $1');
+				text = text.replace(re, '\n.' + namespace + ' $1');
 				obj.addClass(namespace);
 				console.log(text);
 			}
