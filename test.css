@@ -1,3 +1,19 @@
 body {
 	background-color: #B2B2B2;
 }
+
+.class123 {
+	color: red;
+}
+
+#id1 {
+	color: blue;
+}
+
+div.class {
+	font-size: 12pt;
+}
+
+div#id {
+	text-decoration:underline;
+}
