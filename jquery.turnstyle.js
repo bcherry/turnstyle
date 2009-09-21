@@ -1,5 +1,6 @@
 (function() {
 	var loadedFiles = {};
+	var seed = 0;
 	jQuery.css = function(filename, obj) {
 		if (typeof obj == "undefined") {
 			if (loadedFiles[filename]) { 
@@ -14,7 +15,9 @@
 			console.log(text);
 			if (typeof obj != "undefined") {
 				var re = /\s*([a-z0-9\.# -_:@]+\s*{)/gim;
-				text = text.replace(re, '\n.test $1');
+				var namespace = "__css" + seed++;
+				text = text.replace(re, '\n.__' + namespace + ' $1');
+				obj.addClass(namespace);
 				console.log(text);
 			}
 			var style = document.createTextNode(text);
