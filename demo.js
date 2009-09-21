@@ -4,7 +4,7 @@ $(function() {
 	});
 
 	$("#demo2").click(function() {
-		$(this).css("rules",$(this).find(".style").text());
+		$(this).parents(".demo").css("rules",$(this).siblings(".style").val());
 	});
 
 	$("#header").click(function() {
