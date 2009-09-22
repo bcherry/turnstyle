@@ -40,7 +40,7 @@
 			obj.addClass(namespace);
 		}
 
-		styleTag.attr('id', namespace);
+		styleTag.attr('href', namespace);
 		styleTag.text(text);
 		head.append(styleTag);
 	}
@@ -83,7 +83,7 @@
 	// Static function to remove CSS
 	$.uncss = function(arg) {
 		// We use getElementById because these ids commonly have '.' in them (breaks jQuery)
-		return !!($(document.getElementById(arg)).remove().length);	
+		return !!($("link[href=" + arg + "], style[href=" + arg + "]").remove().length);	
 	};
 
 	// We override jQuery.fn.css, so keep the old one around
