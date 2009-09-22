@@ -10,17 +10,18 @@
 		<div class="demo" id="filedemo">
 			<h2>apply file <a href="test.css">test.css</a></h2>
 			<div class="click">
-				<button class="page">apply to the page</button>
-				<button class="elem">apply to this div</button>
+				<button class="page">toggle on the page</button>
+				<button class="elem">toggle on this div</button>
 			</div>
 			<div>
 				<h3>test.css:</h3>
-				<div id="testcsstext" class="code"></div>
+				<div id="testcsstext" class="code"><div style="text-align:center;"><img src="ajax-loader.gif" alt="loading..." /></div></div>
 			</div>
 			<div>
-				<h3>this code</h3>
+				<h3>this code:</h3>
 				<div class="code">
 					$.css("test.css");
+					and
 					$("#filedemo").css("filename","test.css");
 				</div>
 			</div>
@@ -28,14 +29,15 @@
 		<div class="demo" id="textdemo">
 			<h2>apply this css</h2>
 			<div class="click">
-				<button class="page">apply to the page</button>
-				<button class="elem">apply to this div</button>
+				<button class="page">toggle on the page</button>
+				<button class="elem">toggle on this div</button>
 			</div>
 			<textarea id="csstext">div { color:blue; }</textarea>
 			<div>
-				<h3>this code</h3>
+				<h3>this code:</h3>
 				<div class="code">
 					$.css($("#csstext").val());
+					and
 					$("#textdemo").css("rules",$("#csstext").val());
 				</div>
 			</div>
