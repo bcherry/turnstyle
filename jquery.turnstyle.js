@@ -26,54 +26,58 @@
 	var loadedFiles = {};
 	var seed = 0;
 	var re = /\s*([a-z0-9\.# -_:@>]+\s*{)/gim;
+	var generateNamespace = function() { return "__css" + seed++; };
 
 	// Loads the specified CSS onto the page or optional object
-	var loadStyle = function(text, obj, name) {
-		var head = document.getElementsByTagName("head")[0];
-		var styleTag = document.createElement("style");
+	var loadStyle = function(text, obj, namespace) {
+		var head = $("head");
+		var styleTag = $("<style/>");
 		
 
 		// Namespace our object and the CSS
 		if (typeof obj != "undefined") {
-			var namespace = "__css" + seed++;
-			text = text.replace(re, '\n.' + namespace + ' $1');
+			text = text.replace(re, '\n.' + name + ' $1');
 			obj.addClass(namespace);
 		}
 
-		name = namespace || name || "__css" + seed++;
-		styleTag.id = name;
-
-		var style = document.createTextNode(text);
-		styleTag.appendChild(style);
-		head.appendChild(styleTag);
+		styleTag.attr('id', namespace);
+		styleTag.text(text);
+		head.append(styleTag);
 	}
 
 	// Static function to load CSS
 	$.css = function(filename, obj) {
-
+		var namespace = filename;
 		// Loading rules directly
 		if (filename.match(re)) {
-			loadStyle(filename, obj);
-			return;
+			namespace = generateNamespace();
+			loadStyle(filename, obj, namespace);
+			return namespace;
 		}
 
 		// Check the cache
 		if (loadedFiles[filename]) { 
-			// Static file, don't load again
+			// Static file, don't load again unless it's been unloaded
 			if (document.getElementById(filename) && typeof obj == "undefined") {
-				return;
+				return namespace;
 			// Namespaced, but we already have the stylesheet
 			} else {
-				loadStyle(loadedFiles[filename], obj, filename);
-				return;
+				namespace = generateNamespace();
+				loadStyle(loadedFiles[filename], obj, namespace);
+				return namespace;
 			}
+		} else if (typeof obj != "undefined") {
+			namespace = generateNamespace();
 		}
+
 
 		// Request the file
 		$.get(filename, function(data) {
 			loadedFiles[filename] = data;
-			loadStyle(data, obj, filename);
+			loadStyle(data, obj, namespace);
 		});
+
+		return namespace;
 	};
 
 	// Static function to remove CSS
