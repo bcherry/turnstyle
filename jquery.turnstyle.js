@@ -28,9 +28,10 @@
 	var re = /\s*([a-z0-9\.# -_:@>]+\s*{)/gim;
 
 	// Loads the specified CSS onto the page or optional object
-	var loadStyle = function(text, obj) {
+	var loadStyle = function(text, obj, name) {
 		var head = document.getElementsByTagName("head")[0];
 		var styleTag = document.createElement("style");
+		
 
 		// Namespace our object and the CSS
 		if (typeof obj != "undefined") {
@@ -38,6 +39,9 @@
 			text = text.replace(re, '\n.' + namespace + ' $1');
 			obj.addClass(namespace);
 		}
+
+		name = namespace || name || "__css" + seed++;
+		styleTag.id = name;
 
 		var style = document.createTextNode(text);
 		styleTag.appendChild(style);
@@ -56,11 +60,11 @@
 		// Check the cache
 		if (loadedFiles[filename]) { 
 			// Static file, don't load again
-			if (typeof obj == "undefined") {
+			if (document.getElementById(filename) && typeof obj == "undefined") {
 				return;
 			// Namespaced, but we already have the stylesheet
 			} else {
-				loadStyle(loadedFiles[filename], obj);
+				loadStyle(loadedFiles[filename], obj, filename);
 				return;
 			}
 		}
@@ -68,8 +72,14 @@
 		// Request the file
 		$.get(filename, function(data) {
 			loadedFiles[filename] = data;
-			loadStyle(data, obj);
+			loadStyle(data, obj, filename);
 		});
+	};
+
+	// Static function to remove CSS
+	$.uncss = function(arg) {
+		// We use getElementById because these ids commonly have '.' in them (breaks jQuery)
+		return !!($(document.getElementById(arg)).remove().length);	
 	};
 
 	// We override jQuery.fn.css, so keep the old one around
