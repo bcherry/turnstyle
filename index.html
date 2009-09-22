@@ -2,20 +2,43 @@
 <head>
 	<title>turnstyle: a CSS dependency manager</title>
 	<link type="text/css" rel="stylesheet" href="reset.css" />
-	<link type="text/css" rel="stylesheet" href="base.css" />
+	<link type="text/css" rel="stylesheet" href="demo.css" />
 </head>
 <body>
 	<h1 id="header">turnstyle: a CSS dependency manager</h1>
 	<div id="turnstyle" class="clearfix">
-		<div id="demo1">
-			<h1>Demo 1</h1>
-			<div class="footer">test footer</div>
+		<div class="demo" id="filedemo">
+			<h2>apply file <a href="test.css">test.css</a></h2>
+			<div class="click">
+				<button class="page">apply to the page</button>
+				<button class="elem">apply to this div</button>
+			</div>
+			<div>
+				<h3>test.css:</h3>
+				<div id="testcsstext" class="code"></div>
+			</div>
+			<div>
+				<h3>this code</h3>
+				<div class="code">
+					$.css("test.css");
+					$("#filedemo").css("filename","test.css");
+				</div>
+			</div>
 		</div>
-		<div class="demo">
-			<button id="demo2">Click To Apply</button>
-			<textarea class="style">div { color: blue; }</textarea>
-			<div>This is a div</div>
-			<span>This is a span</div>
+		<div class="demo" id="textdemo">
+			<h2>apply this css</h2>
+			<div class="click">
+				<button class="page">apply to the page</button>
+				<button class="elem">apply to this div</button>
+			</div>
+			<textarea id="csstext">div { color:blue; }</textarea>
+			<div>
+				<h3>this code</h3>
+				<div class="code">
+					$.css($("#csstext").val());
+					$("#textdemo").css("rules",$("#csstext").val());
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="footer">an experiment by <a href="http://bcherry.net">ben cherry</a></div>
